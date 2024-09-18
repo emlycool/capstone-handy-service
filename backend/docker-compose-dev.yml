@@ -1,0 +1,37 @@
+services:
+    app:
+        build:
+            context: .
+            dockerfile: Dockerfile
+        image: handy-backend-service
+        deploy:
+            restart_policy:
+                condition: on-failure
+                delay: 10s
+                max_attempts: 6
+        container_name: handy-backend-service-app
+        ports:
+            - "8066:80"
+        volumes:
+            - /var/www/vendor
+            - .:/var/www
+        env_file:
+            - ./.env
+        depends_on:
+            - mysql
+    
+    mysql: 
+        platform: linux/x86_64
+        image: mysql:8.0
+        command: --default-authentication-plugin=mysql_native_password
+        restart: unless-stopped
+        tty: true
+        environment:
+            MYSQL_DATABASE: handy_service_db
+            MYSQL_USER: db_user
+            MYSQL_PASSWORD: root_password
+            MYSQL_ROOT_PASSWORD: root_password
+        ports:
+            - "33065:3306"
+        volumes:
+            - ./storage/db-data:/var/lib/mysql
