@@ -11,7 +11,7 @@ services:
                 max_attempts: 6
         container_name: handy-backend-service-app
         ports:
-            - "8066:80"
+            - "8061:80"
         volumes:
             - /var/www/vendor
             - .:/var/www
