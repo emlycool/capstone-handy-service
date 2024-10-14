@@ -15,6 +15,11 @@ up: ## Environment up!
 	$(DOCKER_COMPOSE) up -d --force-recreate --renew-anon-volumes
 
 
+.PHONY: exec-app
+exec-app: ## Environment up!
+	$(DOCKER_COMPOSE) exec -it app bash
+
+
 .PHONY: destroy
 destroy:
 	$(DOCKER_COMPOSE) down --remove-orphans --volumes
@@ -26,6 +31,10 @@ destroy:
 .PHONY: migrate
 migrate:
 	$(DOCKER_COMPOSE) exec app bash -c "php artisan migrate --force"
+
+.PHONY: migrate-fresh
+migrate-fresh:
+	$(DOCKER_COMPOSE) exec app bash -c "php artisan migrate:fresh --seed --force"
 
 # .PHONY: test
 # test:

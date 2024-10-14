@@ -2,9 +2,10 @@
 
 namespace App\Http\Requests;
 
+use Illuminate\Validation\Rule;
+use App\Exceptions\ApiValidationException;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Validation\Validator;
-use App\Exceptions\ApiValidationException;
 
 class BaseValidationRequest extends FormRequest
 {
@@ -37,5 +38,16 @@ class BaseValidationRequest extends FormRequest
         }
 
         return $message;
+    }
+
+    public function paginateAndFilterRules(): array
+    {
+        return [
+            'order_by' => ['nullable', 'string', Rule::in(['asc', 'desc'])],
+            'limit' => ['nullable', 'integer', 'min:1'],
+            'search' => ['nullable', 'string', ],
+            'start_date' => ['nullable', 'required_unless:end_date,null', 'date_format:"Y-m-d"', 'before_or_equal:' . now()->toDateString()],
+            'end_date' => ['nullable', 'required_unless:start_date,null', 'date_format:"Y-m-d"', 'after:start_date']
+        ];
     }
 }

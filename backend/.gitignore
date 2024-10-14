@@ -20,3 +20,4 @@ yarn-error.log
 /.vscode
 /.zed
 storage/db-data
+storage/media-library

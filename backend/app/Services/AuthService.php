@@ -3,6 +3,7 @@ namespace App\Services;
 
 use App\Models\User;
 use App\Exceptions\ApiException;
+use App\Helpers\AppUtil;
 use App\Helpers\OtpHelper;
 use App\Notifications\User\SendForgotPasswordNotification;
 use Illuminate\Support\Facades\Auth;
@@ -38,7 +39,7 @@ class AuthService
 
     public function login(User $user): string
     {
-        return auth('api')->login($user);
+        return (string) auth('api')->login($user);
     }
 
     public function resetPassword(
@@ -77,7 +78,7 @@ class AuthService
         $user = User::whereEmail($email)->first();
         if($user){
             $otp = $this->otpHelper->createOtp($email);
-            $user->notify(new SendForgotPasswordNotification($user, $otp));
+            AppUtil::defer(fn() => $user->notify(new SendForgotPasswordNotification($user, $otp)));
         }
 
         return true;

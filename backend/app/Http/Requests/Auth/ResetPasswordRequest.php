@@ -27,7 +27,7 @@ class ResetPasswordRequest extends BaseValidationRequest
     {
         return [
             'email' => ['required', 'email'],
-            'password' => ['confirmed', $this->passValidationRules()],
+            'password' => [ 'required', 'confirmed', $this->passValidationRules()],
             'otp' => ['required', 'digits']
         ];
     }

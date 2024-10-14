@@ -28,9 +28,11 @@ RUN apt-get update \
     git \
     && apt-get clean \
     && pecl install redis \
+    && docker-php-ext-configure gd --with-freetype --with-jpeg \
     && docker-php-ext-configure zip \
     && docker-php-ext-install \
     -j$(nproc) gd \
+    gd \
     exif \
     opcache \
     pdo_mysql \

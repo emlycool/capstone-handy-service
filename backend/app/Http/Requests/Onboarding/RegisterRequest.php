@@ -31,6 +31,7 @@ class RegisterRequest extends BaseValidationRequest
             'last_name' => ['string', 'required', 'max:225'],
             'email' => ['email', 'required', 'max:225', Rule::unique(User::class)],
             'password' => ['required', 'string', 'confirmed', $this->passValidationRules()],
+            'phone' => ['nullable', 'string'],
         ];
     }
 }

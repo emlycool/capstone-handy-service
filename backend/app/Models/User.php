@@ -3,8 +3,12 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+
+use App\Enums\RoleEnum;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Tymon\JWTAuth\Contracts\JWTSubject;
@@ -19,7 +23,8 @@ class User extends Authenticatable implements JWTSubject
      * @var array<int, string>
      */
     protected $fillable = [
-        'name',
+        'first_name',
+        'last_name',
         'email',
         'password',
         'phone',
@@ -71,6 +76,39 @@ class User extends Authenticatable implements JWTSubject
 
     public function roles(): BelongsToMany
     {
-        return $this->belongsToMany(Role::class, 'user_role', 'role_id', 'user_id');
+        return $this->belongsToMany(Role::class, 'user_role', 'user_id', 'role_id');
+    }
+
+    public function provider(): HasOne
+    {
+        return $this->hasOne(Provider::class, 'user_id');
+    }
+
+    public function hasRoles(array $comparedRoles): bool
+    {
+        $userRoles = $this->roles()->pluck('name')->toArray();
+
+        if (in_array(RoleEnum::SUPER_ADMIN->value, $userRoles)) {
+            return true;
+        }
+
+        foreach ($userRoles as $role) {
+
+            if (in_array($role, $comparedRoles)) {
+                return true;
+            }
+
+        }
+        return false;
+    }
+
+    public function isAdmin(): bool
+    {
+        return $this->hasRoles([RoleEnum::ADMIN->value, RoleEnum::SUPER_ADMIN->value]);
+    }
+
+    public function services(): HasMany
+    {
+        return $this->hasMany(ServiceProviderService::class, 'service_provider_id');
     }
 }
