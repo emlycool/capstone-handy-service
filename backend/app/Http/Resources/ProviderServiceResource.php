@@ -3,6 +3,7 @@
 namespace App\Http\Resources;
 
 use Illuminate\Http\Request;
+use Illuminate\Http\Resources\MissingValue;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class ProviderServiceResource extends JsonResource
@@ -23,7 +24,12 @@ class ProviderServiceResource extends JsonResource
                 'name' => $this->category->name,
                 'description' => $this->category->description
             ],
-            'provider' => new ProviderResource($this->provider),
+            'provider' => $this->when(
+                ! ($this->whenLoaded('provider') instanceof MissingValue) &&
+                !is_null($this->provider),
+                ProviderResource::make($this->provider),
+                null
+            ),
             // 'user' => new UserResource($this->user),
             'price' => $this->price,
             'price_model' => $this->price_model,

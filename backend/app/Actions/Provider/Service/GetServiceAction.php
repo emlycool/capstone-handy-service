@@ -7,6 +7,8 @@ class GetServiceAction
 {
     public function handle(int $id): ?ServiceProviderService
     {
-        return ServiceProviderService::find($id);
+        $service = ServiceProviderService::find($id);
+        $service->load('provider');
+        return $service;
     }
 }

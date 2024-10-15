@@ -16,10 +16,11 @@ return new class extends Migration
             $table->foreignId('client_id')->nullable()->constrained("users", "id")->nullOnDelete();
             $table->foreignId('service_provider_id')->nullable()->constrained("users", "id")->nullOnDelete();
             $table->foreignId('service_id')->nullable()->constrained("services", "id")->nullOnDelete();
+            $table->foreignId('provider_service_id')->nullable()->constrained("service_provider_services", "id")->nullOnDelete();
             $table->string("status")->default("pending");
             $table->text("notes")->nullable();
-            $table->timestamp("appointment_date");
-            $table->timestamp("appointment_end_date_time");
+            $table->timestamp("appointment_start_date");
+            $table->timestamp("appointment_end_date");
             $table->timestamps();
         });
     }

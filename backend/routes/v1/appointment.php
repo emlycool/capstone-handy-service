@@ -13,16 +13,19 @@ Route::prefix("v1/appointment")
             Route::post("book", "book");
             Route::post("cancel", "cancel");
             Route::post("reschedule", "reschedule");
-            Route::get("/", "list");
-            Route::get("/{id}", "show");
+
+            Route::prefix("client/list")->group(function(){
+                Route::get("/", "clientList");
+                Route::get("/{id}", "show");
+            });
         });
 
-        Route::middleware(['role:' . RoleEnum::CLIENT->value . ',' . RoleEnum::SERVICE_PROVIDER->value])->group(function(){
-            Route::get("/", "list");
-            Route::get("/{id}", "show");
-        });
 
         Route::middleware(['role:' . RoleEnum::SERVICE_PROVIDER->value])->group(function(){
+            Route::prefix("provider/list")->group(function(){
+                Route::get("/", "providerList");
+                Route::get("/{id}", "show");
+            });
             Route::post("accept", "acceptBooking");
             Route::post("reject", "rejectBooking");
         });
