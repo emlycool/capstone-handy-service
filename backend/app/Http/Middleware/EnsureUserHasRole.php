@@ -18,7 +18,7 @@ class EnsureUserHasRole
     {
         $user = $request->user();
 
-        throw_if(!$user, new ApiException(msg: "User unauthenticated"));
+        throw_if(!$user, new ApiException(msg: "User unauthenticated", code: 401));
 
         throw_if(!$user->hasRoles($roles), new ApiException(msg: "User unauthorized based on role"));
         return $next($request);

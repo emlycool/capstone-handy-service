@@ -2,7 +2,6 @@
 
 namespace App\Http\Resources;
 
-use App\Models\Provider;
 use App\Models\Service;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
@@ -30,7 +29,7 @@ class AppointmentResource extends JsonResource
                 'name' => $this->serviceCategory->name,
                 'description' => $this->serviceCategory->description,
             ],
-            'provider' => Provider::make($this->providerUser?->provider),
+            'provider' => ProviderResource::make($this->providerUser?->provider),
             'service' => ProviderServiceResource::make($this->service),
             'appointment_start_date' => $this->appointment_start_date,
             'appointment_end_date' => $this->appointment_end_date,

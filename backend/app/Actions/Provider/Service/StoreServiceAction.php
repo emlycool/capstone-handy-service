@@ -16,6 +16,7 @@ class StoreServiceAction
             'description',
             'included_benefits',
             'price_model',
+            'price',
             "duration_minutes",
             "working_hours"
         ]));

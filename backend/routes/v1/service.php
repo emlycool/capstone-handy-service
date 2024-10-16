@@ -6,22 +6,22 @@ use App\Http\Controllers\V1\ServiceController;
 use Illuminate\Support\Facades\Route;
 
 
-Route::prefix("v1/services")->group(function(){
+Route::prefix("v1")->group(function(){
 
-    Route::prefix('categories')->controller(ServiceCategoryController::class)->group(function(){
+    Route::prefix('service-categories')->controller(ServiceCategoryController::class)->group(function(){
             // categories
-        Route::prefix('categories')->group(function(){
+        Route::prefix('/')->group(function(){
             Route::get("/", "index");
             Route::get("/{id}", "show");
         });
-        Route::prefix('categories')->middleware(["auth:api", "role:".RoleEnum::ADMIN->value])->group(function(){
+        Route::prefix('/')->middleware(["auth:api", "role:".RoleEnum::ADMIN->value])->group(function(){
             Route::post("/", "store");
             Route::put("/", "update");
             Route::delete("/{id}", "destroy");
         });
     });
 
-    Route::controller(ServiceController::class)->group(function(){
+    Route::prefix("services")->controller(ServiceController::class)->group(function(){
         // services
         Route::get("/", "index");
         Route::get("/{id}", "show");

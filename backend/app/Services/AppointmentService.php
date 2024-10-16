@@ -46,6 +46,7 @@ class AppointmentService
             'appointment_end_date' => $end_date,
             'status' => AppointmentStatusEnum::BOOKED->value,  
             'notes' => $requestData['notes'] ?? null,
+            'address' => $requestData['address'] ?? null,
         ]);
     }
 
@@ -145,13 +146,13 @@ class AppointmentService
             ]
         )->get(['appointment_start_date', 'appointment_end_date'])
         ->map(fn($appointment) => [
-            'start_date' => $appointment->appointment_start_date,
-            'end_date' => $appointment->appointment_end_date,
+            'start' => $appointment->appointment_start_date,
+            'end' => $appointment->appointment_end_date,
         ])->toArray();
 
         $appointment_duration = $service->duration_minutes;
         $working_schedule = $service->working_hours;
-        $end_date = Carbon::now()->addDays(7);
+        $end_date = Carbon::now()->addWeeks(1);
 
         return AppointmentSchedulerUtil::list_available_slots_by_dates(
             $appointments, 
@@ -165,6 +166,7 @@ class AppointmentService
     public function isSlotAvailable(ServiceProviderService $service, Carbon $start_date, Carbon $end_date): bool
     {
         $slots = $this->getAvailabitySlots($service);
+
         foreach ($slots as $slot) {
             if(
                 $start_date->isSameAs('Y-m-d H:i', $slot['start']) &&

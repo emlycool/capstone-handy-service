@@ -22,7 +22,7 @@ class ListAppointmentAction
                 $query->where('client_id', $client->id);
             })
             ->when($provider, function ($query) use ($provider) {
-                $query->where('provider_id', $provider->id);
+                $query->where('service_provider_id', $provider->id);
             })
             ->when(isset($requestData['status']), function ($query) use ($requestData) {
                 $query->whereIn('status', Arr::wrap($requestData['status']));

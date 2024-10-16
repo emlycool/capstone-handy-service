@@ -25,7 +25,7 @@ class Appointment extends Model
 
     public function service(): BelongsTo
     {
-        return $this->belongsTo(ProviderService::class, 'provider_service_id');
+        return $this->belongsTo(ServiceProviderService::class, 'provider_service_id');
     }
 
     public function serviceCategory(): BelongsTo

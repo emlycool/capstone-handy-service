@@ -26,9 +26,10 @@ class BookAppointmentRequest extends BaseValidationRequest
         return [
             'provider_service_id' => ['required', Rule::exists(ServiceProviderService::class, "id")],
             'date' => ['required', 'date', 'after_or_equal:today', 'date_format:Y-m-d'],
-            'start_time' => ['required', 'date_format:H:i'],
-            'end_time' => ['required', 'date_format:H:i'],
+            'start_time' => ['required', 'date_format:H:i:s'],
+            'end_time' => ['required', 'date_format:H:i:s'],
             'notes' => ['nullable', 'string', 'max:1000'],
+            'address' => ['required', 'string']
         ];
     }
 }

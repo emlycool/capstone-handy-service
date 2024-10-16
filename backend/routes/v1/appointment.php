@@ -13,6 +13,7 @@ Route::prefix("v1/appointment")
             Route::post("book", "book");
             Route::post("cancel", "cancel");
             Route::post("reschedule", "reschedule");
+            Route::post("available-slots", "getAvailableSlots");
 
             Route::prefix("client/list")->group(function(){
                 Route::get("/", "clientList");

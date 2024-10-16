@@ -1,17 +1,22 @@
 {
-  "name": "nuxt-app",
+  "name": "frontend",
+  "version": "1.0.0",
   "private": true,
-  "type": "module",
   "scripts": {
+    "dev": "nuxt",
     "build": "nuxt build",
-    "dev": "nuxt dev",
-    "generate": "nuxt generate",
-    "preview": "nuxt preview",
-    "postinstall": "nuxt prepare"
+    "start": "nuxt start",
+    "generate": "nuxt generate"
   },
   "dependencies": {
-    "nuxt": "^3.13.0",
-    "vue": "latest",
-    "vue-router": "latest"
+    "@nuxtjs/axios": "^5.13.6",
+    "core-js": "^3.25.3",
+    "element-ui": "^2.15.10",
+    "nuxt": "^2.15.8",
+    "recaptcha-v3": "^1.11.3",
+    "vue": "^2.7.10",
+    "vue-server-renderer": "^2.7.10",
+    "vue-template-compiler": "^2.7.10",
+    "vuelidate": "^0.7.7"
   }
 }

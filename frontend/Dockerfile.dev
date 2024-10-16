@@ -3,6 +3,8 @@ ARG NODE_VERSION=20.17.0
 FROM node:${NODE_VERSION}-slim as base
 
 ENV NODE_ENV=development
+ENV NUXT_HOST=0.0.0.0
+ENV NUXT_PORT=3000
 
 WORKDIR /src
 
@@ -15,5 +17,3 @@ RUN npm install
 FROM base
 
 COPY --from=build /src/node_modules /src/node_modules
-
-CMD [ "npm", "run", "dev" ]

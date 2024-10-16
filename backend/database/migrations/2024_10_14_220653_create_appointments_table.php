@@ -18,6 +18,7 @@ return new class extends Migration
             $table->foreignId('service_id')->nullable()->constrained("services", "id")->nullOnDelete();
             $table->foreignId('provider_service_id')->nullable()->constrained("service_provider_services", "id")->nullOnDelete();
             $table->string("status")->default("pending");
+            $table->string("address");
             $table->text("notes")->nullable();
             $table->timestamp("appointment_start_date");
             $table->timestamp("appointment_end_date");

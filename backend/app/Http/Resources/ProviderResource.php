@@ -25,6 +25,7 @@ class ProviderResource extends JsonResource
                 'code' => $this->province->code
             ],
             'city' => $this->city,
+            'business_name' => $this->business_name,
             'business_phone' => $this->business_phone,
             'business_email' => $this->business_email,
             'business_logo' => $this->logo,

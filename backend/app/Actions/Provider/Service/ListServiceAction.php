@@ -12,7 +12,7 @@ class ListServiceAction
         $services = ServiceProviderService::query()
             ->with([
                 'category:id,name,description',
-                'provider:providers.id,business_phone,business_email,address,city,province_id',
+                'provider:providers.id,business_name,business_phone,business_email,address,city,province_id',
                 'provider.province:id,name,code',
                 'media'
             ])

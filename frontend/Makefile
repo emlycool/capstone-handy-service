@@ -16,3 +16,8 @@ build-no-cache: ## build-no-cache the stack
 .PHONY: up
 up: ## Environment up!
 	$(DOCKER_COMPOSE) up -d --force-recreate --renew-anon-volumes
+
+PHONY: destroy
+destroy: ## Environment up!
+	$(DOCKER_COMPOSE) down --remove-orphans --volumes
+	$(DOCKER_COMPOSE) rm --stop --volumes --force
