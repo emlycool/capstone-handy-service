@@ -24,8 +24,9 @@ FROM base
 
 ENV PORT=$PORT
 
-COPY --from=build /src/.output /src/.output
-# Optional, only needed if you rely on unbundled dependencies
-# COPY --from=build /src/node_modules /src/node_modules
+COPY --from=build /src/.nuxt /src/.nuxt
+COPY --from=build /src/static /src/static
+COPY --from=build /src/package.json /src/package.json
 
-CMD [ "node", ".output/server/index.mjs" ]
+# Start the application
+CMD [ "npm", "start" ]

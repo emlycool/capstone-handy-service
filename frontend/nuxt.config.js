@@ -69,8 +69,8 @@ export default {
   },
 
   server: {
-    host: '0.0.0.0',
-    port: 3000 // default: 3000
+    host: process.env.host || "0.0.0.0",
+    port: process.env.port || 3000, // default: 3000
   },
 
   // Global CSS: https://go.nuxtjs.dev/config-css
@@ -106,6 +106,8 @@ export default {
   env:{
     baseUrl: process.env.API_BASE_URL || 'http://127.0.0.1:8061',
     recaptchaKeys: '6LdBbaQbAAAAAKpoINBgNp6mPz_CKsjxnY-ObktE',
+    port: process.env.PORT || 3000,
+    host: process.env.APP_HOST || "0.0.0.0",
   },
 
   loading: {
