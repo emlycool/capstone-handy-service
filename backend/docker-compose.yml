@@ -11,6 +11,6 @@ services:
                 max_attempts: 6
         container_name: handy-backend-service-app
         ports:
-            - "8061:80"
+            - "80:80"
         env_file:
             - ./.env
