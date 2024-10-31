@@ -3,14 +3,16 @@
 namespace App\Http\Controllers\V1;
 
 use App\Helpers\ApiResponse;
-use App\Http\Controllers\Controller;
-use App\Http\Requests\Onboarding\RegisterRequest;
-use App\Http\Requests\Onboarding\StoreProviderRequest;
-use App\Http\Resources\ProviderResource;
-use App\Http\Resources\UserResource;
-use App\Services\OnboardingService;
-use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\JsonResponse;
+use App\Services\OnboardingService;
+use App\Http\Controllers\Controller;
+use App\Http\Resources\UserResource;
+use App\Http\Resources\ProviderResource;
+use App\Http\Requests\Onboarding\RegisterRequest;
+use App\Http\Requests\User\UpdateUserProfileRequest;
+use App\Http\Requests\Onboarding\StoreProviderRequest;
+use App\Http\Requests\Onboarding\UpdateUserProviderRequest;
 
 class OnboardingController extends Controller
 {
@@ -58,4 +60,28 @@ class OnboardingController extends Controller
             data: $cities
         ))->asSuccessful(); 
     }    
+
+    public function updateUser(UpdateUserProfileRequest $request): JsonResponse
+    {
+        $user = auth()->user();
+
+        $this->onboardingService->updateUser($user, $request->validated());
+
+        return (new ApiResponse(
+            data: UserResource::make($user)->toArray(request()),
+            message: 'User updated successfully'
+        ))->asSuccessful();
+    }
+
+    public function updateProvider(UpdateUserProviderRequest $request): JsonResponse
+    {
+        $user = auth()->user();
+
+        $provider = $this->onboardingService->updateUserProvider($user, $request->validated());
+
+        return (new ApiResponse(
+            data: ProviderResource::make($provider)->toArray(request()),
+            message: 'Provider updated successfully'
+        ))->asSuccessful();
+    }
 }

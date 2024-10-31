@@ -34,12 +34,12 @@ class Provider extends Model implements HasMedia
         );
     }
 
-    public function registerMediaConversions(?Media $media = null): void
-    {
-        $this
-            ->addMediaConversion('business_logo_preview')
-            ->format('webp')
-            ->fit(Fit::Contain, 300, 300)
-            ->nonQueued();
-    }
+    // public function registerMediaConversions(?Media $media = null): void
+    // {
+    //     $this
+    //         ->addMediaConversion('business_logo_preview')
+    //         ->format('webp')
+    //         ->fit(Fit::Contain, 300, 300)
+    //         ->nonQueued();
+    // }
 }

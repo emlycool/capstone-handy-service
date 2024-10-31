@@ -1,5 +1,7 @@
+
 export const state = () => ({
     bearerToken: null,
+    user: null
   })
   
   export const mutations = {
@@ -10,6 +12,14 @@ export const state = () => ({
     clearBearerToken(state) {
       state.bearerToken = null;
       localStorage.removeItem('bearerToken'); // Remove token from localStorage
+    },
+    setUser(state, user) {
+      state.user = user;
+      localStorage.setItem('user', JSON.stringify(user)); // Save user to localStorage
+    },
+    clearUser(state) {
+      state.user = null;
+      localStorage.removeItem('user'); // Remove user from localStorage
     }
   }
   
@@ -19,6 +29,10 @@ export const state = () => ({
     },
     isLoggedIn(state) {
       return !!state.bearerToken; // Check if token exists (truthy value)
+    },
+    authUser(state) {
+      console.log("user", state.user)
+      return state.user;
     }
   }
   
@@ -35,7 +49,7 @@ export const state = () => ({
         
         // Set token in the store and localStorage
         commit('setBearerToken', token);
-  
+        commit('setUser', response.data.data.user);
         // Optionally set the token in axios for all future requests
         // this.$axios.setToken(token, 'Bearer');
         return response
@@ -48,16 +62,24 @@ export const state = () => ({
     initializeAuth({ commit, state }) {
       // Check if token exists in localStorage and set it in the store
       const token = localStorage.getItem('bearerToken');
+      let user = localStorage.getItem('user');
       
-      if (token) {
+      if(user) {
+        user = JSON.parse(user);
+      }
+      console.log("user stored", user);
+      console.log("token stored", token);
+
+      if (token && user) {
         commit('setBearerToken', token);
+        commit('setUser', user);
       }
     },
   
     logout({ commit }) {
       // Clear token from Vuex and localStorage
       commit('clearBearerToken');
-      // this.$axios.setToken(false); // Optionally unset axios token
+      commit('clearUser')
     }
   }
   

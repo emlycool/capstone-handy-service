@@ -24,6 +24,16 @@ class UserResource extends JsonResource
             'onboarded_on' => $this->created_at,
             'provider' => ProviderResource::make($this->provider),
             'roles' => $this->roles->pluck('name'),
+            'avatar' => $this->avatar ? $this->avatar : $this->defaultAvatar()
         ];
+    }
+
+    private function defaultAvatar(): string
+    {
+        return "https://ui-avatars.com/api/?" . http_build_query([
+            'background' => '0D8ABC',
+            'color' => 'fff',
+            'name' => $this->first_name . ' ' . $this->last_name
+        ]);
     }
 }

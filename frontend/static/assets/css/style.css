@@ -7658,12 +7658,19 @@ footer {
     color: var(--colorBlack);
 }
 
-.login_text span {
+.login_text .invalid-feedback{
+    color: var(--colorRed);
+}
+/* .login_text span {
     text-align: center;
     display: block;
     margin-top: 25px;
     text-transform: capitalize;
     color: var(--colorBlack);
+} */
+
+.login_text span.el-switch__label.is-active span {
+    color: var(--colorPrimary);
 }
 
 .other_login_option {

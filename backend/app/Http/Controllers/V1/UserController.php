@@ -29,28 +29,4 @@ class UserController extends Controller
             message: 'User retrieved successfully'
         ))->asSuccessful();
     }
-
-    public function update(UpdateUserProfileRequest $request): JsonResponse
-    {
-        $user = auth()->user();
-
-        $this->onboardingService->updateUser($user, $request->validated());
-
-        return (new ApiResponse(
-            data: UserResource::make($user)->toArray(request()),
-            message: 'User updated successfully'
-        ))->asSuccessful();
-    }
-
-    public function updateProvider(UpdateUserProviderRequest $request): JsonResponse
-    {
-        $user = auth()->user();
-
-        $provider = $this->onboardingService->updateUserProvider($user, $request->validated());
-
-        return (new ApiResponse(
-            data: ProviderResource::make($provider)->toArray(request()),
-            message: 'Provider updated successfully'
-        ))->asSuccessful();
-    }
 }

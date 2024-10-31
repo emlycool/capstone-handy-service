@@ -2,14 +2,14 @@
     <div>
         <LayoutMiniBanner breadcrumb="Login">
             <ul class="d-flex flex-wrap">
-                <li><a href="#">Home</a></li>
-                <li><a href="#">Login</a></li>
+                <li><nuxt-link to="/">Home</nuxt-link></li>
+                <li><nuxt-link to="/">Register</nuxt-link></li>
             </ul>
         </LayoutMiniBanner>
 
         <!--=============================
         SIGN IN START
-    ==============================-->
+        ==============================-->
         <section class="login_area pt_120 xs_pt_100">
             <div class="container">
                 <div class="row justify-content-center">
