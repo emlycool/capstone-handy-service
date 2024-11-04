@@ -328,7 +328,7 @@ export default {
         
         setCities(province_id) {
 
-            let province = this.provinces.find(({id}) => province_id)
+            let province = this.provinces.find(({ id }) => id === province_id);
             if(province){
                 this.cities = province.cities
             }
