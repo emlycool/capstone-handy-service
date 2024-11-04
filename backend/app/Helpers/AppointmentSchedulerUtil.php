@@ -62,8 +62,9 @@ class AppointmentSchedulerUtil
 
                         // Check if the slot overlaps with any existing appointment
                         foreach ($appointments as $appointment) {
-                            $appointment_start = Carbon::createFromTimestamp($appointment['start']);
-                            $appointment_end = Carbon::createFromTimestamp($appointment['end']);
+                            $appointment_start = $appointment['start'];
+                            $appointment_end = $appointment['end'];
+
                             if ($slot['start']->lt($appointment_end) && $slot['end']->gt($appointment_start)) {
                                 $is_available = false;
                                 break;

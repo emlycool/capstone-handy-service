@@ -6,7 +6,7 @@ role=${CONTAINER_ROLE:-app}
 if [ $role = "app" ]; then
 
     echo "Running migration and seeds..."
-    php artisan migrate --seed
+    php artisan migrate --seed --force
     while [ $? -ne 0 ]; do
         sleep 10
         php artisan migrate --seed --force

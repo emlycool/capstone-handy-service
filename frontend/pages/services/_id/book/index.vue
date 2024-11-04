@@ -142,13 +142,14 @@
                                                         v-if="selectedDate"
                                                         label="Select Time"
                                                     >
-                                                        <el-select
+                                                        <select class="form-control select-2"
                                                             v-model="
                                                                 selectedTime
                                                             "
                                                             placeholder="Select"
                                                         >
-                                                            <el-option
+                                                            <option>Select time</option>  
+                                                            <option
                                                                 v-for="(
                                                                     item, index
                                                                 ) in filteredTimeSlots"
@@ -160,8 +161,8 @@
                                                                     item.value
                                                                 "
                                                             >
-                                                            </el-option>
-                                                        </el-select>
+                                                            </option>
+                                                        </select>
                                                     </el-form-item>
                                                 </div>
                                             </div>
@@ -339,13 +340,23 @@ export default {
                     return slotDate === selectedDateString; // Compare only the dates
                 })
                 .map((slot) => {
-                    const start = new Date(slot.start).toLocaleTimeString(
-                        "en-GB",
-                        { hour12: false }
+                    const start = new Date(slot.start).toLocaleString(
+                        "en-US",
+                        {
+        hour: 'numeric',
+        minute: '2-digit',
+        second: '2-digit',
+        hour12: true,
+        timeZone: 'UTC'
+    }
                     );
-                    const end = new Date(slot.end).toLocaleTimeString("en-GB", {
-                        hour12: false,
-                    });
+                    const end = new Date(slot.end).toLocaleString("en-US", {
+        hour: 'numeric',
+        minute: '2-digit',
+        second: '2-digit',
+        hour12: true,
+        timeZone: 'UTC'
+    });
 
                     return {
                         label: `${start} - ${end}`,
@@ -443,8 +454,8 @@ export default {
                     {
                         provider_service_id: id,
                         date: this.selectedDate.toLocaleDateString("en-CA"),
-                        start_time: this.selectedTime.start,
-                        end_time: this.selectedTime.end,
+                        start_time: this.convertTo24HourTime(this.selectedTime.start),
+                        end_time: this.convertTo24HourTime(this.selectedTime.end),
                         notes: this.booking.notes,
                         address: this.booking.address,
                     }
@@ -476,6 +487,20 @@ export default {
             // this.selectedTime = null;
             this.$v.$reset();
         },
+
+        convertTo24HourTime(timeString) {
+    let [time, period] = timeString.split(' ');
+    let [hours, minutes, seconds] = time.split(':').map(Number);
+
+    if (period === 'PM' && hours !== 12) {
+        hours += 12; // Convert PM times, except for 12 PM, to 24-hour format
+    } else if (period === 'AM' && hours === 12) {
+        hours = 0; // Convert 12 AM to 00 in 24-hour format
+    }
+
+    // Format hours, minutes, and seconds to ensure two digits
+    return `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+}
     },
 
     validations: {

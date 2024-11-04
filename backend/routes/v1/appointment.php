@@ -9,7 +9,7 @@ Route::prefix("v1/appointment")
     ->controller(AppointmentController::class)
     ->group(function(){
 
-        Route::middleware(['role:' . RoleEnum::CLIENT->value])->group(function(){
+        Route::middleware(['role:' . RoleEnum::CLIENT->value, 'auth:api'])->group(function(){
             Route::post("book", "book");
             Route::post("cancel", "cancel");
             Route::post("reschedule", "reschedule");
@@ -22,7 +22,7 @@ Route::prefix("v1/appointment")
         });
 
 
-        Route::middleware(['role:' . RoleEnum::SERVICE_PROVIDER->value])->group(function(){
+        Route::middleware(['role:' . RoleEnum::SERVICE_PROVIDER->value, 'auth:api'])->group(function(){
             Route::prefix("provider/list")->group(function(){
                 Route::get("/", "providerList");
                 Route::get("/{id}", "show");
