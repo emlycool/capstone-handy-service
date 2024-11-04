@@ -3,18 +3,18 @@ The "Home Handy Service" app is designed to simplify the process of finding and 
 
 ##  Folder Structure
 Root/
-├── frontend/
-│   ├── components/
-│   ├── pages/
-│   ├── public/
-│   └── src/
-│       ├── assets/
-│       ├── styles/
-│       └── utils/
-├── backend/
-│   ├── app/
-│   ├── config/
-│   ├── routes/
-│   └── tests/
-└── README.md
+├──frontend/  
+│──├── components/  
+│──├── pages/  
+│──|── public/  
+│──└── src/  
+│──|── assets/  
+│  ├── styles/  
+│  └── utils/  
+├── backend/  
+│   ├── app/  
+│   ├── config/  
+│   ├── routes/  
+│   └── tests/  
+└── README.md  
 
