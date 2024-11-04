@@ -7,75 +7,14 @@
             <div class="container">
                 <div class="row">
                     <div class="col-xl-3 col-lg-4 wow fadeInLeft">
-                        <div class="dashboard_sidebar">
-                            <div class="dashboard_sidebar_user">
-                                <div class="img">
-                                    <img
-                                        :src="authUser.avatar"
-                                        alt="dashboard"
-                                        class="img-fluid w-100"
-                                    />
-                                </div>
-                                <h3>
-                                    {{
-                                        `${authUser.first_name} ${authUser.last_name}`
-                                    }}
-                                </h3>
-                                <p>Client</p>
-                            </div>
-                            <div class="dashboard_sidebar_menu">
-                                <ul>
-                                    <li>
-                                        <a class="active" href="dashboard.html"
-                                            ><i class="fas fa-user"></i>
-                                            Personal Info</a
-                                        >
-                                    </li>
-                                    <li>
-                                        <a href="dashboard_order.html"
-                                            ><i
-                                                class="fas fa-shopping-basket"
-                                            ></i>
-                                            My Service Requests</a
-                                        >
-                                    </li>
-                                    <li>
-                                        <a href="dashboard_review.html"
-                                            ><i class="fas fa-star"></i>
-                                            Reviews</a
-                                        >
-                                    </li>
-                                    <li>
-                                        <a href="dashboard_wishlist.html"
-                                            ><i class="fas fa-heart"></i>
-                                            Bookmarks</a
-                                        >
-                                    </li>
-                                    <li>
-                                        <a href="dashboard_change_password.html"
-                                            ><i class="fas fa-key"></i> Change
-                                            Password</a
-                                        >
-                                    </li>
-                                    <li>
-                                        <a
-                                            href="#"
-                                            data-bs-toggle="modal"
-                                            data-bs-target="#exampleModal"
-                                            ><i class="fas fa-sign-out-alt"></i>
-                                            Logout</a
-                                        >
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
+                        <DashboardClientMenu />
                     </div>
                     <div class="col-xl-9 col-lg-8 wow fadeInRight">
                         <div class="dashboard_content">
                             <p class="welcome">
                                 Hello,
                                 {{
-                                    `${authUser.first_name} ${authUser.last_name}`
+                                    `${authUser.first_name}`
                                 }}
                             </p>
                             <h2 class="title">Welcome To Your Profile</h2>
@@ -240,6 +179,7 @@ import { mapGetters, mapMutations } from "vuex";
 import { required } from "vuelidate/lib/validators";
 
 export default {
+
     data() {
         return {
             editingProfile: false,
@@ -265,13 +205,11 @@ export default {
         }),
 
         async updateUser() {
-            console.log("hit");
             
             if (!this.validateForm() || this.sendingRequest) return;
 
             this.sendingRequest = true;
             try {
-                // const recaptchaToken = await this.recaptcha();
                 const response = await this.$axios.put("/api/v1/onboarding/user", {...this.profile})
 
                 const user = response.data.data;
@@ -285,7 +223,7 @@ export default {
                 this.editingProfile = false
 
             } catch (error) {
-                this.toastError(error);
+                console.log(error);
             }
             finally {
                 this.sendingRequest = false

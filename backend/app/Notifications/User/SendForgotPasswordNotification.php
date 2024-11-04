@@ -45,7 +45,7 @@ class SendForgotPasswordNotification extends Notification
             ->subject(Lang::get('Reset Password Notification'))
             ->line(Lang::get('You are receiving this email because we received a password reset request for your account.'))
             ->line(Lang::get('OTP: ' . $this->otp))
-            ->action(Lang::get('Reset Password'), FrontendUrlHelper::resetPasswordUrl())
+            ->action(Lang::get('Reset Password'), FrontendUrlHelper::resetPasswordUrl($notifiable->email))
             ->line(Lang::get('This password reset OTP will expire in :count minutes.', ['count' => config('auth.passwords.'.config('auth.defaults.passwords').'.expire')]))
             ->line(Lang::get('If you did not request a password reset, no further action is required.'));
     }

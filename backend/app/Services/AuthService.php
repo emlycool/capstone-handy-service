@@ -84,9 +84,11 @@ class AuthService
         return true;
     }   
 
-    public function changePassword()
+    public function changePassword(User $user, string $password)
     {
-
+        $user->update([
+            'password' => $password
+        ]);
     }
 
     public function authResponse(string $token): array

@@ -13,11 +13,14 @@ use App\Http\Requests\Onboarding\RegisterRequest;
 use App\Http\Requests\User\UpdateUserProfileRequest;
 use App\Http\Requests\Onboarding\StoreProviderRequest;
 use App\Http\Requests\Onboarding\UpdateUserProviderRequest;
+use App\Http\Requests\User\ChangePasswordRequest;
+use App\Services\AuthService;
 
 class OnboardingController extends Controller
 {
     public function __construct(
-        protected OnboardingService $onboardingService
+        protected OnboardingService $onboardingService,
+        protected AuthService $authService
     )
     {
 
@@ -82,6 +85,15 @@ class OnboardingController extends Controller
         return (new ApiResponse(
             data: ProviderResource::make($provider)->toArray(request()),
             message: 'Provider updated successfully'
+        ))->asSuccessful();
+    }
+
+    public function changePassword(ChangePasswordRequest $request): JsonResponse
+    {
+        $this->authService->changePassword($request->user(), $request->new_password);
+
+        return (new ApiResponse(
+            message: 'Password changed successfully'
         ))->asSuccessful();
     }
 }

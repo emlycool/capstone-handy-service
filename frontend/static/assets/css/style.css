@@ -8199,7 +8199,7 @@ footer {
     font-size: 16px;
     font-weight: 600;
     display: inline-block;
-    width: 120px;
+    /* width: 120px; */
 }
 
 /* personal info end */
@@ -8514,6 +8514,26 @@ footer {
     justify-content: center;
     margin-top: 25px;
     gap: 10px 20px;
+}
+
+.badge-yellow {
+    --bs-badge-color: var(--paraColor);
+    background-color: var(--colorYellow);
+}
+
+.badge-red {
+    --bs-badge-color: var(--colorWhite);
+    background-color: var(--colorRed);
+}
+
+.badge-blue {
+    --bs-badge-color: var(--colorWhite);
+    background-color: var(--colorPrimary);
+}
+
+.badge-grey {
+    --bs-badge-color: var(--colorWhite);
+    background-color: var(--paraColor);
 }
 
 /*==========================

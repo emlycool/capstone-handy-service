@@ -17,8 +17,8 @@ export default {
     ],
     link: [
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
-      { rel: 'stylesheet', type: 'text/css', href: '/assets/css/all.min.css' },
       { rel: 'stylesheet', type: 'text/css', href: '/assets/css/bootstrap.min.css' },
+      { rel: 'stylesheet', type: 'text/css', href: '/assets/css/all.min.css' },
       { rel: 'stylesheet', type: 'text/css', href: '/assets/css/venobox.min.css' },
       { rel: 'stylesheet', type: 'text/css', href: '/assets/css/slick.css' },
       { rel: 'stylesheet', type: 'text/css', href: '/assets/css/scroll_button.css' },

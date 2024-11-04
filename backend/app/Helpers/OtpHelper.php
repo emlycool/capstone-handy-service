@@ -66,7 +66,6 @@ class OtpHelper
             return false;
         }
         $validity = Hash::check($code, $otp->code);
-        return ($validity);
         if($validity){
             $this->delete($otp);
         }

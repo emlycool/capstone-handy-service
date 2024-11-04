@@ -12,7 +12,7 @@ class ListAppointmentAction
     public function handle(?User $client = null, ?User $provider = null, array $requestData = []): LengthAwarePaginator
     {
         return $this->query($client, $provider, $requestData)
-            ->paginated(Arr::get($requestData, "limit"));
+            ->paginate(Arr::get($requestData, "limit"));
     }
 
     public function query(?User $client = null, ?User $provider = null, array $requestData = []): Builder

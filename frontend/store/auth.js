@@ -58,6 +58,19 @@ export const state = () => ({
         throw error; // Handle error in the component
       }
     },
+
+    async logout({ commit }) {
+      try {
+        // Make login request using Axios
+        const response = await this.$axios.post('/api/v1/auth/logout');
+        commit('clearBearerToken');
+        commit('clearUser');
+        return response
+      } catch (error) {
+        console.error('Error logging in:', error);
+        throw error; // Handle error in the component
+      }
+    },
   
     initializeAuth({ commit, state }) {
       // Check if token exists in localStorage and set it in the store

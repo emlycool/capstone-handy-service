@@ -1,15 +1,17 @@
 <?php
 
-namespace App\Http\Requests\Auth;
+namespace App\Http\Requests\User;
 
 use App\Http\Requests\BaseValidationRequest;
 use App\Http\Requests\Rules\Concerns\HasPasswordValidationTrait;
+use Closure;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Foundation\Http\FormRequest;
 
-class ResetPasswordRequest extends BaseValidationRequest
+class ChangePasswordRequest extends BaseValidationRequest
 {
     use HasPasswordValidationTrait;
-
+    
     /**
      * Determine if the user is authorized to make this request.
      */
@@ -26,9 +28,13 @@ class ResetPasswordRequest extends BaseValidationRequest
     public function rules(): array
     {
         return [
-            'email' => ['required', 'email'],
-            'password' => [ 'required', 'confirmed', $this->passValidationRules()],
-            'otp' => ['required', 'digits:6']
+            'current_password' => ['required', $this->passValidationRules(), function(string $attribute, mixed $value, Closure $fail){
+                $matches =  Hash::check($value, $this->user()->password);
+                if(!$matches) {
+                    $fail('The current password is incorrect.');
+                }
+            }],
+            'new_password' => ['required', $this->passValidationRules()],
         ];
     }
 }

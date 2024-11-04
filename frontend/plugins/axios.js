@@ -29,9 +29,9 @@ export default function ({ $axios, redirect, app, store }) {
             store.commit("auth/clearBearerToken")
             redirect({name: 'auth-login', query:{ redirect: app.router.history.current.fullPath}})
           },
-        //   400 : () => {
-        //     redirect('/400')
-        //   },
+          400 : () => {
+            Message.error(error?.response?.data?.message ??'Unprocessable Entity')
+          },
           403 : () => {
             Message.error('You do not have permission to perform this action')
             redirect('/403')

@@ -33,7 +33,7 @@
                     </li> -->
                     <li>
                         <nuxt-link to="/auth/login" class="hire_btn common_btn_2" v-if="!isLoggedIn">Login</nuxt-link>
-                        <nuxt-link to="/client/account" class="hire_btn common_btn_2" v-else>My Account</nuxt-link>
+                        <nuxt-link :to="dashboard()" class="hire_btn common_btn_2" v-else>My Account</nuxt-link>
                     </li>
                 </ul>
             </div>
@@ -52,12 +52,18 @@ export default {
     },
 
     methods: {
-        ...mapActions({})
+        ...mapActions({}),
+        dashboard(){
+            let user = this.authUser
+            return user.roles.includes("service_provider") && !user.roles.includes("admin") ? 
+                    "/provider/account": "/client/account";
+        }
     },
 
     computed: {
         ...mapGetters({
-            isLoggedIn: 'auth/isLoggedIn'
+            isLoggedIn: 'auth/isLoggedIn',
+            authUser: "auth/authUser",
         })
     }
 }

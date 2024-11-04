@@ -22,6 +22,6 @@ Route::prefix("v1/onboarding")->controller(OnboardingController::class)->group(f
         });
 
         Route::put("user", "updateUser");
-
+        Route::put("user/change-password", "changePassword");
     });
 });

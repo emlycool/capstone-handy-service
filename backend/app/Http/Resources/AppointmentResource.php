@@ -33,8 +33,8 @@ class AppointmentResource extends JsonResource
             'service' => ProviderServiceResource::make($this->service),
             'appointment_start_date' => $this->appointment_start_date,
             'appointment_end_date' => $this->appointment_end_date,
-            'status' => $this->notes,
-            'notes' => $this->status,
+            'status' => $this->status,
+            'notes' => $this->notes,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
         ];

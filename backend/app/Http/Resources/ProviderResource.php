@@ -28,8 +28,20 @@ class ProviderResource extends JsonResource
             'business_name' => $this->business_name,
             'business_phone' => $this->business_phone,
             'business_email' => $this->business_email,
-            'business_logo' => $this->logo,
+            'business_logo' => $this->logo->url ?? [
+                'url' => $this->logoPlaceHolder(),
+                'thumb' => $this->logoPlaceHolder()
+            ],
             'address' => $this->address
         ];
+    }
+
+    private function logoPlaceHolder(): string
+    {
+        return "https://ui-avatars.com/api/?" . http_build_query([
+            'background' => '0D8ABC',
+            'color' => 'fff',
+            'name' => $this->business_name
+        ]);
     }
 }

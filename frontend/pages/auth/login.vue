@@ -3,7 +3,7 @@
         <LayoutMiniBanner breadcrumb="Login">
             <ul class="d-flex flex-wrap">
                 <li><nuxt-link to="/">Home</nuxt-link></li>
-                <li><nuxt-link to="/">Register</nuxt-link></li>
+                <li><nuxt-link to="/auth/login">Login</nuxt-link></li>
             </ul>
         </LayoutMiniBanner>
 
@@ -59,11 +59,9 @@
                             <div
                                 class="single_input d-flex flex-wrap align-items-center justify-content-end"
                             >
-                                <a
-                                    class="forget_password mb-2"
-                                    href="forgot_password.html"
-                                    >Forgot password ?</a
-                                >
+                                <nuxt-link to="/auth/forgot-password" class="forget_password mb-2">
+                                    Forgot password
+                                </nuxt-link>
                             </div>
                             <button class="common_btn form-control mb-3" type="submit">
                                 Login
@@ -144,15 +142,18 @@ export default {
                     //     this.$route.query.redirect || { name: "account" }
                     // );
                     let redirectUrl = this.$route.query.redirect;
+                    const user = response.data.data.user
+                    let dashboad = user.roles.includes("service_provider") && !user.roles.includes("admin") ? 
+                    "/provider/account": "/client/account"
                     // After login, check if there is a redirect URL in the query
-                    const redirect = redirectUrl || '/';
+                    const redirect = redirectUrl || dashboad;
                     
                     // Redirect the user to the provided URL or default to home
                     this.$router.push(redirect);
                 }
             } catch (error) {
                 // eslint-disable-next-line no-console
-                this.toastError(error);
+                // this.toastError(error);
                 
             } finally {
                 this.sendingRequest = false;
